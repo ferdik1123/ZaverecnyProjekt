@@ -77,13 +77,14 @@ namespace ZaverecnyProject1
 			Console.WriteLine("________________________________________\n\n");
 		}
 
+		//Vypisuje vrh aplikace u vyhledávání pojištěných
 		private void HlavickaVyhledavani()
 		{
 			HlavickaProgramu();
 			Console.WriteLine("Vyhledávání pojištěného.\n");
 		}
 
-		//Výběr úkonu, který chceme udělat
+		//Výběr akce v hlavní nabídce
 		private int VyberMenu()
 		{
 			int vybranaAkce;
@@ -93,6 +94,7 @@ namespace ZaverecnyProject1
 			Console.WriteLine("2 - Vypsat všechny pojištěné");
 			Console.WriteLine("3 - Vyhledat pojištěného");
 			Console.WriteLine("4 - Konec");
+			//Zkontroluje jestli je napsaný text číslo od 1 do 4
 			while (!(int.TryParse(Console.ReadLine(), out vybranaAkce) && vybranaAkce > 0 && vybranaAkce <= 4))
 				Console.WriteLine("Zadejte číslo od 1 do 4 pro výběr akce.");
 			return vybranaAkce;
@@ -113,8 +115,8 @@ namespace ZaverecnyProject1
 			string vek = Console.ReadLine().Trim();
 
 			seznamPojistenych.Add(new Pojisteny(jmeno, prijmeni, telefonniCislo, vek));
-			Console.WriteLine("\nData byla ulozena. Pokračujte libovolnou klávesou...");
 			SaveData(seznamPojistenych);
+			Console.WriteLine("\nData byla ulozena. Pokračujte libovolnou klávesou...");
 			Console.ReadKey();
 		}
 
@@ -133,7 +135,7 @@ namespace ZaverecnyProject1
 		}
 
 
-		//Hledá pojištěné v evidenci podle jména a příjmení
+		//Hledá pojištěné v evidenci podle zadaných kritérií uživatelem
 		private void VyhledejOsobu()
 		{
 			HlavickaVyhledavani();
@@ -249,9 +251,7 @@ namespace ZaverecnyProject1
 			foreach (string kriterium in stringKriterii)
 			{
 				int cislo;
-				//Kontroluje jestli string jde převést na číslo
-				//jestli je v rozmezí od 1 do 4 a jesli už v seznamu
-				//není
+				//Kontroluje jestli je zadaný text číslo od 1 do 4 a není ještě obsaženo v seznamu
 				if (
 					int.TryParse(kriterium, out cislo) &&
 					cislo > 0 &&

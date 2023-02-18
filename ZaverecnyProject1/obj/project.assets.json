@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Dropbox\\itnetwork\\ZaverecnyProject1\\ZaverecnyProject1\\ZaverecnyProject1.csproj",
+      "projectUniqueName": "D:\\Dropbox\\itnetwork\\ZaverecnyProject1\\ZaverecnyProjekt\\ZaverecnyProject1\\ZaverecnyProject1.csproj",
       "projectName": "ZaverecnyProject1",
-      "projectPath": "D:\\Dropbox\\itnetwork\\ZaverecnyProject1\\ZaverecnyProject1\\ZaverecnyProject1.csproj",
+      "projectPath": "D:\\Dropbox\\itnetwork\\ZaverecnyProject1\\ZaverecnyProjekt\\ZaverecnyProject1\\ZaverecnyProject1.csproj",
       "packagesPath": "C:\\Users\\Filip\\.nuget\\packages\\",
-      "outputPath": "D:\\Dropbox\\itnetwork\\ZaverecnyProject1\\ZaverecnyProject1\\obj\\",
+      "outputPath": "D:\\Dropbox\\itnetwork\\ZaverecnyProject1\\ZaverecnyProjekt\\ZaverecnyProject1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Filip\\AppData\\Roaming\\NuGet\\NuGet.Config",

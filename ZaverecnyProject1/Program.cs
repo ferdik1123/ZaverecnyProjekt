@@ -7,7 +7,6 @@
         {  
             Pojistovna pojistovna = new Pojistovna();
             pojistovna.Menu();
-            //pojistovna.VyhledejOsobu();
         }
     }
 }
