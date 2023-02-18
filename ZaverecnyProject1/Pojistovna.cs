@@ -141,7 +141,14 @@ namespace ZaverecnyProject1
 			HlavickaVyhledavani();
 
 			List<int> seznamKriterii = KriteriaHledani();
-			VyhledavaniOsoby(seznamKriterii);
+			if (seznamKriterii.Count != 0)
+				VyhledavaniOsoby(seznamKriterii);
+			else
+			{
+				Console.WriteLine("Nebylo zadané kritérium pro vyhledávání");
+				Console.WriteLine("\nPokračujte libovolnou klávesou...");
+				Console.ReadKey();
+			}
 		}
 
 		//Určí podmínky pro hledání osob
