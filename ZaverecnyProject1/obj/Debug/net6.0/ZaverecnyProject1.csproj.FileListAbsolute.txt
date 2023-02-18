@@ -1,0 +1,15 @@
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\bin\Debug\net6.0\ZaverecnyProject1.exe
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\bin\Debug\net6.0\ZaverecnyProject1.deps.json
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\bin\Debug\net6.0\ZaverecnyProject1.runtimeconfig.json
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\bin\Debug\net6.0\ZaverecnyProject1.dll
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\bin\Debug\net6.0\ZaverecnyProject1.pdb
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\ZaverecnyProject1.csproj.AssemblyReference.cache
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\ZaverecnyProject1.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\ZaverecnyProject1.AssemblyInfoInputs.cache
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\ZaverecnyProject1.AssemblyInfo.cs
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\ZaverecnyProject1.csproj.CoreCompileInputs.cache
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\ZaverecnyProject1.dll
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\refint\ZaverecnyProject1.dll
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\ZaverecnyProject1.pdb
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\ZaverecnyProject1.genruntimeconfig.cache
+D:\Dropbox\itnetwork\ZaverecnyProject1\ZaverecnyProject1\obj\Debug\net6.0\ref\ZaverecnyProject1.dll
