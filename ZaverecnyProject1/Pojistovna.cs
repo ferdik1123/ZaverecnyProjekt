@@ -162,7 +162,7 @@ namespace ZaverecnyProject1
 			{
 				foreach (Pojisteny osoba in seznamPojistenych)
 				{
-					Console.WriteLine(osoba.VypisUzivateleSId());
+					Console.WriteLine(osoba);
 				}
 			}
 			else
