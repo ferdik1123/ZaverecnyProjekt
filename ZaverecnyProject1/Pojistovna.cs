@@ -11,8 +11,7 @@ namespace ZaverecnyProject1
 	internal class Pojistovna
 	{
 		private List<Pojisteny> seznamPojistenych;
-		private List<int> seznamIdSmazanych;
-		
+		private List<int> seznamIdSmazanych;		
 
 		public Pojistovna()
 		{
@@ -20,7 +19,6 @@ namespace ZaverecnyProject1
 			seznamIdSmazanych = new List<int>();
 		}
 
-		//smazání uživatele a přepisování uživatele
 		//Hlavní menu aplikace
 		public void Menu()
 		{
@@ -54,27 +52,38 @@ namespace ZaverecnyProject1
 			}
 		}
 
-		//Uložení pojištěných
-		private void SaveData(List<Pojisteny> pojistenci)
+		//Uložení do souboru
+		private void SaveData(List<Pojisteny> pojistenci, List<int> idSmazanych)
 		{
-			string fileName = "Pojistenci.json";
-			string jsonString = JsonSerializer.Serialize(pojistenci);
-			File.WriteAllText(fileName, jsonString);
+			string souborPojistenci = "Pojistenci.json";
+			string souborIdSmazanych = "IdSmazanych.json";
+			string jsonStringPojistenci = JsonSerializer.Serialize(pojistenci);
+			string jsonStringIdSmazanych = JsonSerializer.Serialize(idSmazanych);
+			File.WriteAllText(souborPojistenci, jsonStringPojistenci);
+			File.WriteAllText(souborIdSmazanych, jsonStringIdSmazanych);
 		}
 
-		//Načítání pojištěných pokud soubor existuje
+		//Načítání souborů pokud soubor existuje
 		private void LoadData()
 		{
 			if (File.Exists(Environment.CurrentDirectory + @"\Pojistenci.json"))
 			{
 				string pojistenci = "Pojistenci.json";
-				string jsonString = File.ReadAllText(pojistenci);
-				seznamPojistenych = JsonSerializer.Deserialize<List<Pojisteny>>(jsonString)!;
+				string jsonStringPojistenci = File.ReadAllText(pojistenci);
+				seznamPojistenych = JsonSerializer.Deserialize<List<Pojisteny>>(jsonStringPojistenci)!;
+
+
+			}
+			if (File.Exists(Environment.CurrentDirectory + @"\IdSmazanych.json"))
+			{
+				string idSmazanych = "IdSmazanych.json";
+				string jsonStringIdSmazanych = File.ReadAllText(idSmazanych);	
+				seznamIdSmazanych = JsonSerializer.Deserialize<List<int>>(jsonStringIdSmazanych)!;			
 			}
 
 		}
 
-		//Vypisuje vrh aplikace, který je vždy stejný
+		//Vypisuje hlavičku aplikace, který je vždy stejný
 		private void HlavickaProgramu()
 		{
 			Console.Clear();
@@ -83,13 +92,14 @@ namespace ZaverecnyProject1
 			Console.WriteLine("________________________________________\n\n");
 		}
 
-		//Vypisuje vrh aplikace u vyhledávání pojištěných
+		//Vypisuje hlavičku aplikace u vyhledávání pojištěných
 		private void HlavickaVyhledavani()
 		{
 			HlavickaProgramu();
 			Console.WriteLine("Vyhledávání pojištěného.\n");
 		}
 
+		//Vypisuje hlavičku aplikace u mazání pojištěného
 		private void HlavickaMazani()
 		{
 			HlavickaProgramu();
@@ -105,7 +115,7 @@ namespace ZaverecnyProject1
 			Console.WriteLine("1 - Přidat nového pojištěného");
 			Console.WriteLine("2 - Vypsat všechny pojištěné");
 			Console.WriteLine("3 - Vyhledat pojištěného");
-			Console.WriteLine("4 - Smaz pojištěného");
+			Console.WriteLine("4 - Smazat pojištěného");
 			Console.WriteLine("5 - Konec");
 			//Zkontroluje jestli je napsaný text číslo od 1 do 5
 			while (!(int.TryParse(Console.ReadLine(), out vybranaAkce) && vybranaAkce > 0 && vybranaAkce <= 5))
@@ -127,6 +137,7 @@ namespace ZaverecnyProject1
 			Console.WriteLine("Zadejte věk:");
 			string vek = Console.ReadLine().Trim();
 
+			//Zajišťuje jedinečnost id
 			if(seznamIdSmazanych.Count == 0)
 			{
 				seznamPojistenych.Add(new Pojisteny(jmeno, prijmeni, telefonniCislo, vek, seznamPojistenych.Count + 1));
@@ -134,13 +145,13 @@ namespace ZaverecnyProject1
 			else
 			{
 				seznamPojistenych.Add(new Pojisteny(jmeno, prijmeni, telefonniCislo, vek, seznamIdSmazanych[0]));
+				seznamIdSmazanych.RemoveAt(0);
 			}
 
-			SaveData(seznamPojistenych);
+			SaveData(seznamPojistenych, seznamIdSmazanych);
 			Console.WriteLine("\nData byla ulozena. Pokračujte libovolnou klávesou...");
 			Console.ReadKey();
 		}
-
 
 		//Výpis všech pojištěných v evidenci
 		private void VypisVsechny()
@@ -177,7 +188,7 @@ namespace ZaverecnyProject1
 			}
 		}
 
-		//Smazání pojištěného
+		//Vybere pojištěné k vymazání
 		private void SmazPojisteneho()
 		{
 			List<Pojisteny> seznamNalezenych = new List<Pojisteny>();
@@ -195,7 +206,12 @@ namespace ZaverecnyProject1
 				}
 			}
 
-			// ***********************************************************************************************
+			PocetPojistenychNaSmazani(seznamNalezenych);
+		}
+
+		//Podle počtu uživatelů zvolí danou metodu na smazání
+		private void PocetPojistenychNaSmazani(List<Pojisteny> seznamNalezenych)
+		{
 			HlavickaMazani();
 			if (seznamNalezenych.Count == 0)
 			{
@@ -220,8 +236,7 @@ namespace ZaverecnyProject1
 					idPojistenych.Add(pojisteny.Id);
 				}
 				Console.WriteLine("Napište Id pojištěného, kterého chcete smazat");
-
-				while (!int.TryParse(Console.ReadLine(), out napsaneId) && idPojistenych.Contains(napsaneId))
+				while (!(int.TryParse(Console.ReadLine(), out napsaneId)) || !idPojistenych.Contains(napsaneId))
 					Console.WriteLine("Napište číselně Id pojištěného, jehož chcecte smazat, které je napsáno víše.");
 				foreach (Pojisteny pojisteny in seznamNalezenych)
 				{
@@ -230,11 +245,9 @@ namespace ZaverecnyProject1
 				}
 				MazaniPojisteneho(pojistenyNaSmazani);
 			}
-
-
 		}
 
-
+		//mazání pojištěného
 		private void MazaniPojisteneho(Pojisteny pojisteny)
 		{
 			Console.WriteLine(pojisteny.VypisUzivateleSId());
@@ -251,9 +264,9 @@ namespace ZaverecnyProject1
 			{
 				seznamIdSmazanych.Add(pojisteny.Id);
 				seznamIdSmazanych.Sort();
-				Console.WriteLine($"Pojištěný {pojisteny.Jmeno} {pojisteny.Prijmeni} byl smazán.");
+				Console.WriteLine($"Pojištěný {pojisteny.Jmeno} {pojisteny.Prijmeni} s id {pojisteny.Id} byl smazán.");
 				seznamPojistenych.Remove(pojisteny);
-				SaveData(seznamPojistenych);
+				SaveData(seznamPojistenych, seznamIdSmazanych);
 				Console.WriteLine("\nPokračujte libovolnou klávesou...");
 				Console.ReadKey();
 			}
@@ -264,7 +277,6 @@ namespace ZaverecnyProject1
 				Console.ReadKey();
 			}
 		}
-
 
 		//Určí podmínky pro hledání osob
 		private void VyhledavaniOsoby(List<int> kriteria)
@@ -306,11 +318,11 @@ namespace ZaverecnyProject1
 				podleVeku = true;
 			}
 			Console.WriteLine();
-			VipisOsob(jmeno, podleJmena, prijmeni, podlePrimeni, telefon, podleTelefonu, vek, podleVeku);			
+			VypisOsob(jmeno, podleJmena, prijmeni, podlePrimeni, telefon, podleTelefonu, vek, podleVeku);			
 		}
 
 		//Vypíše hledané osoby, podle zadaných kritérií
-		private void VipisOsob(string jmeno, bool podleJmena, string prijmeni, bool podlePrijmeni, string telefon, bool podleTelefonu, string vek, bool podleVeku)
+		private void VypisOsob(string jmeno, bool podleJmena, string prijmeni, bool podlePrijmeni, string telefon, bool podleTelefonu, string vek, bool podleVeku)
 		{
 			bool jeVEvidenci = false;
 			foreach (Pojisteny pojisteny in seznamPojistenych)
