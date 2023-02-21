@@ -18,6 +18,7 @@ namespace ZaverecnyProject1
 			seznamPojistenych = new List<Pojisteny>();
 		}
 
+		//smazání uživatele a přepisování uživatele
 		//Hlavní menu aplikace
 		public void Menu()
 		{
@@ -114,7 +115,7 @@ namespace ZaverecnyProject1
 			Console.WriteLine("Zadejte věk:");
 			string vek = Console.ReadLine().Trim();
 
-			seznamPojistenych.Add(new Pojisteny(jmeno, prijmeni, telefonniCislo, vek));
+			seznamPojistenych.Add(new Pojisteny(jmeno, prijmeni, telefonniCislo, vek, seznamPojistenych.Count + 1));
 			SaveData(seznamPojistenych);
 			Console.WriteLine("\nData byla ulozena. Pokračujte libovolnou klávesou...");
 			Console.ReadKey();

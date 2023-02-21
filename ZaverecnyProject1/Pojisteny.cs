@@ -13,18 +13,20 @@ namespace ZaverecnyProject1
         public string Prijmeni { get; private set; }
         public string TelefonniCislo { get; private set; }
         public string Vek { get; private set; }
+        public int Id { get; private set; }
 
-        public Pojisteny(string jmeno, string prijmeni, string telefonniCislo, string vek)
+        public Pojisteny(string jmeno, string prijmeni, string telefonniCislo, string vek, int id)
         {
             Jmeno = jmeno;
             Prijmeni = prijmeni;
             TelefonniCislo = telefonniCislo;
             Vek = vek;
+            Id = id;
         }
 
         public override string ToString()
         {
-            return string.Format($"{Jmeno}\t\t{Prijmeni}\t\t{Vek}\t\t{TelefonniCislo}");
+            return string.Format($"{Id}\t{Jmeno}\t\t{Prijmeni}\t\t{Vek}\t\t{TelefonniCislo}");
         }
     }
 }
