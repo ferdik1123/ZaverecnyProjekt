@@ -127,10 +127,16 @@ namespace ZaverecnyProject1
 		{
 			HlavickaProgramu();
 			Console.WriteLine("Výpis všech uložených osob:\n");
-			foreach (Pojisteny osoba in seznamPojistenych)
+			if (seznamPojistenych.Count != 0)
 			{
-				Console.WriteLine(osoba);
+				foreach (Pojisteny osoba in seznamPojistenych)
+				{
+					Console.WriteLine(osoba);
+				}
 			}
+			else
+				Console.WriteLine("Nejsou uložení žádní pojištění.");
+
 			Console.WriteLine("\nPokračujte libovolnou klávesou...");
 			Console.ReadKey();
 		}
