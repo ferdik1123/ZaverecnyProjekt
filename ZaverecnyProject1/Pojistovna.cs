@@ -10,19 +10,21 @@ namespace ZaverecnyProject1
 {
 	internal class Pojistovna
 	{
-		List<Pojisteny> seznamPojistenych;
+		private List<Pojisteny> seznamPojistenych;
+		private List<int> seznamIdSmazanych;
 		
 
 		public Pojistovna()
 		{
 			seznamPojistenych = new List<Pojisteny>();
+			seznamIdSmazanych = new List<int>();
 		}
 
 		//smazání uživatele a přepisování uživatele
 		//Hlavní menu aplikace
 		public void Menu()
 		{
-			LoadData(seznamPojistenych);
+			LoadData();
 			while (true)
 			{
 				bool konec = false;
@@ -36,6 +38,9 @@ namespace ZaverecnyProject1
 						break;
 					case 3:
 						VyhledejOsobu();
+						break;
+					case 4:
+						SmazPojisteneho();
 						break;
 					default:
 						konec = true;
@@ -58,12 +63,12 @@ namespace ZaverecnyProject1
 		}
 
 		//Načítání pojištěných pokud soubor existuje
-		private void LoadData(List<Pojisteny> pojistenci)
+		private void LoadData()
 		{
 			if (File.Exists(Environment.CurrentDirectory + @"\Pojistenci.json"))
 			{
-				string fileName = "Pojistenci.json";
-				string jsonString = File.ReadAllText(fileName);
+				string pojistenci = "Pojistenci.json";
+				string jsonString = File.ReadAllText(pojistenci);
 				seznamPojistenych = JsonSerializer.Deserialize<List<Pojisteny>>(jsonString)!;
 			}
 
@@ -85,6 +90,12 @@ namespace ZaverecnyProject1
 			Console.WriteLine("Vyhledávání pojištěného.\n");
 		}
 
+		private void HlavickaMazani()
+		{
+			HlavickaProgramu();
+			Console.WriteLine("Mazání pojištěného.\n");
+		}
+
 		//Výběr akce v hlavní nabídce
 		private int VyberMenu()
 		{
@@ -94,10 +105,11 @@ namespace ZaverecnyProject1
 			Console.WriteLine("1 - Přidat nového pojištěného");
 			Console.WriteLine("2 - Vypsat všechny pojištěné");
 			Console.WriteLine("3 - Vyhledat pojištěného");
-			Console.WriteLine("4 - Konec");
-			//Zkontroluje jestli je napsaný text číslo od 1 do 4
-			while (!(int.TryParse(Console.ReadLine(), out vybranaAkce) && vybranaAkce > 0 && vybranaAkce <= 4))
-				Console.WriteLine("Zadejte číslo od 1 do 4 pro výběr akce.");
+			Console.WriteLine("4 - Smaz pojištěného");
+			Console.WriteLine("5 - Konec");
+			//Zkontroluje jestli je napsaný text číslo od 1 do 5
+			while (!(int.TryParse(Console.ReadLine(), out vybranaAkce) && vybranaAkce > 0 && vybranaAkce <= 5))
+				Console.WriteLine("Zadejte číslo od 1 do 5 pro výběr akce.");
 			return vybranaAkce;
 		}
 
@@ -115,7 +127,15 @@ namespace ZaverecnyProject1
 			Console.WriteLine("Zadejte věk:");
 			string vek = Console.ReadLine().Trim();
 
-			seznamPojistenych.Add(new Pojisteny(jmeno, prijmeni, telefonniCislo, vek, seznamPojistenych.Count + 1));
+			if(seznamIdSmazanych.Count == 0)
+			{
+				seznamPojistenych.Add(new Pojisteny(jmeno, prijmeni, telefonniCislo, vek, seznamPojistenych.Count + 1));
+			}
+			else
+			{
+				seznamPojistenych.Add(new Pojisteny(jmeno, prijmeni, telefonniCislo, vek, seznamIdSmazanych[0]));
+			}
+
 			SaveData(seznamPojistenych);
 			Console.WriteLine("\nData byla ulozena. Pokračujte libovolnou klávesou...");
 			Console.ReadKey();
@@ -127,14 +147,19 @@ namespace ZaverecnyProject1
 		{
 			HlavickaProgramu();
 			Console.WriteLine("Výpis všech uložených osob:\n");
-			foreach (Pojisteny osoba in seznamPojistenych)
+			if (seznamPojistenych.Count != 0)
 			{
-				Console.WriteLine(osoba);
+				foreach (Pojisteny osoba in seznamPojistenych)
+				{
+					Console.WriteLine(osoba.VypisUzivateleSId());
+				}
 			}
+			else
+				Console.WriteLine("Nejsou uložení žádní pojištění.");
+
 			Console.WriteLine("\nPokračujte libovolnou klávesou...");
 			Console.ReadKey();
 		}
-
 
 		//Hledá pojištěné v evidenci podle zadaných kritérií uživatelem
 		private void VyhledejOsobu()
@@ -151,6 +176,95 @@ namespace ZaverecnyProject1
 				Console.ReadKey();
 			}
 		}
+
+		//Smazání pojištěného
+		private void SmazPojisteneho()
+		{
+			List<Pojisteny> seznamNalezenych = new List<Pojisteny>();
+			HlavickaMazani();
+			Console.WriteLine("Zadejte jméno a příjmení pojištěného kterého chcete odstranit.");
+			Console.Write("Zadejte jméno: ");
+			string jmeno = Console.ReadLine();
+			Console.Write("Zadejte příjmení: ");
+			string prijmeni = Console.ReadLine();
+			foreach (Pojisteny pojisteny in seznamPojistenych)
+			{
+				if (pojisteny.Jmeno.ToLower() == jmeno.ToLower() && pojisteny.Prijmeni.ToLower() == prijmeni.ToLower())
+				{
+					seznamNalezenych.Add(pojisteny);
+				}
+			}
+
+			// ***********************************************************************************************
+			HlavickaMazani();
+			if (seznamNalezenych.Count == 0)
+			{
+				Console.WriteLine("V seznamu se tento pojištěný nenachází.");
+				Console.WriteLine("\nPokračujte libovolnou klávesou...");
+				Console.ReadKey();
+			}
+			else if (seznamNalezenych.Count == 1)
+			{
+				Pojisteny pojistenyNaSmazani = seznamNalezenych[0];
+				MazaniPojisteneho(pojistenyNaSmazani);
+			}
+			else
+			{
+				List<int> idPojistenych = new List<int>();
+				int napsaneId;
+				Pojisteny pojistenyNaSmazani = seznamNalezenych[0];
+				Console.WriteLine("Byli nalezeni tito pojištění:");
+				foreach (Pojisteny pojisteny in seznamNalezenych)
+				{
+					Console.WriteLine(pojisteny.VypisUzivateleSId());
+					idPojistenych.Add(pojisteny.Id);
+				}
+				Console.WriteLine("Napište Id pojištěného, kterého chcete smazat");
+
+				while (!int.TryParse(Console.ReadLine(), out napsaneId) && idPojistenych.Contains(napsaneId))
+					Console.WriteLine("Napište číselně Id pojištěného, jehož chcecte smazat, které je napsáno víše.");
+				foreach (Pojisteny pojisteny in seznamNalezenych)
+				{
+					if (pojisteny.Id == napsaneId)
+						pojistenyNaSmazani = pojisteny;
+				}
+				MazaniPojisteneho(pojistenyNaSmazani);
+			}
+
+
+		}
+
+
+		private void MazaniPojisteneho(Pojisteny pojisteny)
+		{
+			Console.WriteLine(pojisteny.VypisUzivateleSId());
+			string odpoved = "";
+			while (true)
+			{
+				Console.WriteLine("Opravdu chcete tohoto pojistného odstranit?[Ano/Ne]");
+				odpoved = Console.ReadLine().Trim().ToLower();
+				if (odpoved == "ano" || odpoved == "ne")
+					break;
+			}
+
+			if (odpoved == "ano")
+			{
+				seznamIdSmazanych.Add(pojisteny.Id);
+				seznamIdSmazanych.Sort();
+				Console.WriteLine($"Pojištěný {pojisteny.Jmeno} {pojisteny.Prijmeni} byl smazán.");
+				seznamPojistenych.Remove(pojisteny);
+				SaveData(seznamPojistenych);
+				Console.WriteLine("\nPokračujte libovolnou klávesou...");
+				Console.ReadKey();
+			}
+			else
+			{
+				Console.WriteLine($"Smazání pojištěného bylo zrušeno.");
+				Console.WriteLine("\nPokračujte libovolnou klávesou...");
+				Console.ReadKey();
+			}
+		}
+
 
 		//Určí podmínky pro hledání osob
 		private void VyhledavaniOsoby(List<int> kriteria)

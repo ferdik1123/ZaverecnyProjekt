@@ -26,7 +26,12 @@ namespace ZaverecnyProject1
 
         public override string ToString()
         {
-            return string.Format($"{Id}\t{Jmeno}\t\t{Prijmeni}\t\t{Vek}\t\t{TelefonniCislo}");
+            return string.Format($"{Jmeno}\t\t{Prijmeni}\t\t{Vek}\t\t{TelefonniCislo}");
+        }
+
+        public string VypisUzivateleSId()
+        {
+            return string.Format($"{Id}\t{Jmeno}\t{Prijmeni}\t{Vek}\t{TelefonniCislo}");
         }
     }
 }
