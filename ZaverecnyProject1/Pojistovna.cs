@@ -19,7 +19,9 @@ namespace ZaverecnyProject1
 			seznamIdSmazanych = new List<int>();
 		}
 
-		//Hlavní menu aplikace
+		/// <summary>
+		/// Hlavní menu aplikace
+		/// </summary>
 		public void Menu()
 		{
 			LoadData();
@@ -52,7 +54,11 @@ namespace ZaverecnyProject1
 			}
 		}
 
-		//Uložení do souboru
+		/// <summary>
+		/// Uložení do souboru
+		/// </summary>
+		/// <param name="pojistenci">Seznam pojištěných</param>
+		/// <param name="idSmazanych">Seznam id po smazaných pojištěných</param>
 		private void SaveData(List<Pojisteny> pojistenci, List<int> idSmazanych)
 		{
 			string souborPojistenci = "Pojistenci.json";
@@ -63,7 +69,10 @@ namespace ZaverecnyProject1
 			File.WriteAllText(souborIdSmazanych, jsonStringIdSmazanych);
 		}
 
-		//Načítání souborů pokud soubor existuje
+
+		/// <summary>
+		/// Načítání souborů pokud soubor existuje
+		/// </summary>
 		private void LoadData()
 		{
 			if (File.Exists(Environment.CurrentDirectory + @"\Pojistenci.json"))
@@ -83,7 +92,9 @@ namespace ZaverecnyProject1
 
 		}
 
-		//Vypisuje hlavičku aplikace, který je vždy stejný
+		/// <summary>
+		/// Vypisuje hlavičku aplikace, který je vždy stejný
+		/// </summary>
 		private void HlavickaProgramu()
 		{
 			Console.Clear();
@@ -92,21 +103,28 @@ namespace ZaverecnyProject1
 			Console.WriteLine("________________________________________\n\n");
 		}
 
-		//Vypisuje hlavičku aplikace u vyhledávání pojištěných
+		/// <summary>
+		/// Vypisuje hlavičku aplikace u vyhledávání pojištěných
+		/// </summary>
 		private void HlavickaVyhledavani()
 		{
 			HlavickaProgramu();
 			Console.WriteLine("Vyhledávání pojištěného.\n");
 		}
 
-		//Vypisuje hlavičku aplikace u mazání pojištěného
+		/// <summary>
+		/// Vypisuje hlavičku aplikace u mazání pojištěného
+		/// </summary>
 		private void HlavickaMazani()
 		{
 			HlavickaProgramu();
 			Console.WriteLine("Mazání pojištěného.\n");
 		}
 
-		//Výběr akce v hlavní nabídce
+		/// <summary>
+		/// Výběr akce v hlavní nabídce
+		/// </summary>
+		/// <returns>Číslo akce která se má provést</returns>
 		private int VyberMenu()
 		{
 			int vybranaAkce;
@@ -123,7 +141,9 @@ namespace ZaverecnyProject1
 			return vybranaAkce;
 		}
 
-		//Přídání nového pojištěného do evidence
+		/// <summary>
+		/// Přídání nového pojištěného do evidence
+		/// </summary>
 		private void Pridej()
 		{
 			HlavickaProgramu();
@@ -153,7 +173,10 @@ namespace ZaverecnyProject1
 			Console.ReadKey();
 		}
 
-		//Výpis všech pojištěných v evidenci
+
+		/// <summary>
+		/// Výpis všech pojištěných v evidenci
+		/// </summary>
 		private void VypisVsechny()
 		{
 			HlavickaProgramu();
@@ -172,7 +195,9 @@ namespace ZaverecnyProject1
 			Console.ReadKey();
 		}
 
-		//Hledá pojištěné v evidenci podle zadaných kritérií uživatelem
+		/// <summary>
+		/// Hledá pojištěné v evidenci podle zadaných kritérií uživatelem
+		/// </summary>
 		private void VyhledejOsobu()
 		{
 			HlavickaVyhledavani();
@@ -188,7 +213,9 @@ namespace ZaverecnyProject1
 			}
 		}
 
-		//Vybere pojištěné k vymazání
+		/// <summary>
+		/// Vybere pojištěné k vymazání
+		/// </summary>
 		private void SmazPojisteneho()
 		{
 			List<Pojisteny> seznamNalezenych = new List<Pojisteny>();
@@ -209,7 +236,10 @@ namespace ZaverecnyProject1
 			PocetPojistenychNaSmazani(seznamNalezenych);
 		}
 
-		//Podle počtu uživatelů zvolí danou metodu na smazání
+		/// <summary>
+		/// Podle počtu uživatelů zvolí danou metodu na smazání
+		/// </summary>
+		/// <param name="seznamNalezenych">Seznam pojištěných, kterým se shoduje jméno a příjmení</param>
 		private void PocetPojistenychNaSmazani(List<Pojisteny> seznamNalezenych)
 		{
 			HlavickaMazani();
@@ -247,7 +277,10 @@ namespace ZaverecnyProject1
 			}
 		}
 
-		//mazání pojištěného
+		/// <summary>
+		/// Ujištění před smazáním pojištěného
+		/// </summary>
+		/// <param name="pojisteny">Pojištěný, kterého chceme smazat</param>
 		private void MazaniPojisteneho(Pojisteny pojisteny)
 		{
 			Console.WriteLine(pojisteny.VypisUzivateleSId());
@@ -278,7 +311,11 @@ namespace ZaverecnyProject1
 			}
 		}
 
-		//Určí podmínky pro hledání osob
+
+		/// <summary>
+		/// Určí podmínky pro hledání osob
+		/// </summary>
+		/// <param name="kriteria">Seznam požadavků podle kterých chceme vyhledávat</param>
 		private void VyhledavaniOsoby(List<int> kriteria)
 		{
 			HlavickaVyhledavani();
@@ -321,7 +358,17 @@ namespace ZaverecnyProject1
 			VypisOsob(jmeno, podleJmena, prijmeni, podlePrimeni, telefon, podleTelefonu, vek, podleVeku);			
 		}
 
-		//Vypíše hledané osoby, podle zadaných kritérií
+		/// <summary>
+		/// Vypíše hledané osoby, podle zadaných kritérií
+		/// </summary>
+		/// <param name="jmeno">Vyhledává zadané jméno</param>
+		/// <param name="podleJmena">Určuje jestli chceme hledat podle jména</param>
+		/// <param name="prijmeni">Vykledává zadané příjmení</param>
+		/// <param name="podlePrijmeni">Urřuje jestli chceme hledat podle příjmení</param>
+		/// <param name="telefon">Vyhledává zadané telefoní číslo</param>
+		/// <param name="podleTelefonu">Určuje jestli chceme hledat podle telefoního čísla</param>
+		/// <param name="vek">Vyhledává zadaný věk</param>
+		/// <param name="podleVeku">Určuje jestli chceme hledat podle věku</param>
 		private void VypisOsob(string jmeno, bool podleJmena, string prijmeni, bool podlePrijmeni, string telefon, bool podleTelefonu, string vek, bool podleVeku)
 		{
 			bool jeVEvidenci = false;
@@ -361,7 +408,10 @@ namespace ZaverecnyProject1
 			Console.ReadKey();
 		}
 
-		//Menu pro hledani kriterií
+		/// <summary>
+		/// Menu pro hledani kriterií
+		/// </summary>
+		/// <returns>Vrátí seznam kritérií podle kterých ceme vyhledávat</returns>
 		private List<int>  KriteriaHledani()
 		{
 			Console.WriteLine("Zadejte podle čeho chcete vyhledávat:");
@@ -369,14 +419,14 @@ namespace ZaverecnyProject1
 			Console.WriteLine("1 - Jmeno");
 			Console.WriteLine("2 - Přijmení");
 			Console.WriteLine("3 - Telefon");
-			Console.WriteLine("4 - Věk");
-			
-			List<int> seznamKriterii = SeznamKriterii();
-			return seznamKriterii;
-
+			Console.WriteLine("4 - Věk");			 
+			return SeznamKriterii();
 		}
 
-		//Vrací list kriterií pro vyhledávání
+		/// <summary>
+		/// Vrací list kriterií pro vyhledávání
+		/// </summary>
+		/// <returns>Vrátí seznam kritérií podle kterých ceme vyhledávat</returns>
 		private List<int> SeznamKriterii()
 		{
 			string kriteria = Console.ReadLine().Trim();
